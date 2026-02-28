@@ -1,7 +1,7 @@
 import asyncio
 from playwright.async_api import async_playwright
 
-BASE_URL = "PASTE_BASE_URL_HERE?seed={}"
+BASE_URL = "PBASE_URL = "https://exam.sanand.workers.dev/tds-2026-01-ga3?seed={}"
 
 SEEDS = range(14, 24)
 
