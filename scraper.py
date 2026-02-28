@@ -1,4 +1,5 @@
 import asyncio
+import re
 from playwright.async_api import async_playwright
 
 BASE_URL = "https://exam.sanand.workers.dev/tds-2026-01-ga3?seed={}"
@@ -8,26 +9,12 @@ async def extract_sum(page, url):
     await page.goto(url, timeout=60000)
     await page.wait_for_load_state("networkidle")
 
-    total = await page.evaluate("""
-        () => {
-            let sum = 0;
-            const elements = document.querySelectorAll("*");
+    text = await page.evaluate("document.body.innerText")
 
-            elements.forEach(el => {
-                let text = el.innerText?.trim();
-                if (!text) return;
+    numbers = re.findall(r'-?\d+(?:\.\d+)?', text)
+    numbers = [float(n) for n in numbers]
 
-                // match full numeric values only
-                if (/^-?\\d+(\\.\\d+)?$/.test(text)) {
-                    sum += Number(text);
-                }
-            });
-
-            return sum;
-        }
-    """)
-
-    return total
+    return sum(numbers)
 
 async def main():
     grand_total = 0
@@ -45,7 +32,6 @@ async def main():
 
         await browser.close()
 
-    print("TOTAL_SUM:", grand_total)
-    print(grand_total)
+    print(grand_total)   # ← ONLY number for grader
 
 asyncio.run(main())
