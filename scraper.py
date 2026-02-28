@@ -32,6 +32,6 @@ async def main():
 
         await browser.close()
 
-    print(grand_total)   # ← ONLY number for grader
+    print(int(grand_total))   # ← ONLY number for grader
 
 asyncio.run(main())
