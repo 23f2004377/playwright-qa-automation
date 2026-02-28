@@ -45,6 +45,7 @@ async def main():
 
         await browser.close()
 
+    print("TOTAL_SUM:", grand_total)
     print(grand_total)
 
 asyncio.run(main())
